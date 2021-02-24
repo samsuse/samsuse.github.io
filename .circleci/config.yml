@@ -67,6 +67,24 @@ jobs:
               echo 'Not master branch, skip deploy'
             fi
 
+  pure_blog_cf_cache:
+
+    # https://circleci.com/docs/2.0/executor-types/#using-machine
+    machine:
+      image: ubuntu-1604:201903-01    # pins image to specific version
+
+    working_directory: ~/blog/
+
+    steps:
+      - run:
+          name: Purge cloudflare cache
+          command: |
+            curl -X POST "https://api.cloudflare.com/client/v4/zones/${CF_ZONE_IDENTIFIER}/purge_cache" \
+                 -H "Authorization: Bearer ${CF_PURGE_CACHE_API_TOKEN}" \
+                 -H "Content-Type: application/json" \
+                 --data '{"purge_everything":true}'
+            echo 'purge everything succeed'
+
   deploy_homepage:
     docker:
       # specify the version
@@ -98,3 +116,10 @@ workflows:
             branches:
               only:
                 - master
+
+      - pure_blog_cf_cache:
+          context: gh-pages-deploy
+          filters:
+            branches:
+              only:
+                - gh-pages

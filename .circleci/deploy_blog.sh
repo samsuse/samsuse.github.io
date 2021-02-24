@@ -26,6 +26,6 @@ MOCK_DATE="`date '+%b %d %H:%M:%S'` $MOCK_YEAR +0000"
 
 # commit and push
 git commit --date="${MOCK_DATE}" -m "update blog from CircleCI"
-git push --quiet -f "https://${GITHUB_TOKEN}@github.com/samsuse/blog.git" master:gh-pages
+git push --quiet -f "https://${GITHUB_TOKEN}@github.com/samsuse/samsuse.github.io.git" master:gh-pages
 
 echo Publish blog to gh-pages successfully
