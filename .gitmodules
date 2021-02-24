@@ -1,0 +1,3 @@
+[submodule "themes/diaspora"]
+	path = themes/diaspora
+	url = git@github.com:killperfect/hugo-theme-diaspora.git
